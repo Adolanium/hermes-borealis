@@ -578,6 +578,24 @@ ${T} [data-glass-raised] {
   --ui-editor-surface-background: var(--ui-bg-chrome);
 }
 
+/* The scene is at full strength only on an empty chat. Once there is text to
+   read (a conversation, or any other page), it fades back so it never competes
+   with the words. The canvas sits on <html>'s paper, so opacity fades to paper. */
+${T} canvas[data-borealis-scene] {
+  opacity: 0.26;
+  transition: opacity 700ms ease;
+}
+
+${T}:has([data-slot="aui_intro"]) canvas[data-borealis-scene] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ${T} canvas[data-borealis-scene] {
+    transition: none;
+  }
+}
+
 /* The sidebar keeps most of its paper, so the sky only glows through it. */
 ${T} [data-slot="sidebar"] {
   position: relative;

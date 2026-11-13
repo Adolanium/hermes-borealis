@@ -13,7 +13,7 @@
   By day, the same view turns into a two-ink print: pink and teal ridges on cream paper, with a low sun.
   Everything is drawn in dots, one per 3 pixels, in the theme's own colours.
 
-  <sub>FOR <a href="https://github.com/NousResearch/hermes-agent">HERMES DESKTOP</a> &nbsp;·&nbsp; COMMUNITY THEME &nbsp;·&nbsp; VERSION 0.1.0</sub>
+  <sub>FOR <a href="https://github.com/NousResearch/hermes-agent">HERMES DESKTOP</a> &nbsp;·&nbsp; COMMUNITY THEME &nbsp;·&nbsp; VERSION 0.1.1</sub>
 
   <br /><br />
 
@@ -21,7 +21,7 @@
 
 </div>
 
-![The Hermes Desktop window split diagonally: on the left, a dark window with a mint and violet dithered aurora over black mountain ridges; on the right, a cream window with pink and teal ridges and a pink sun](media/banner.png?v=0.1.0)
+![The Hermes Desktop window split diagonally: on the left, a dark window with a mint and violet dithered aurora over black mountain ridges; on the right, a cream window with pink and teal ridges and a pink sun](media/banner.png?v=0.1.1)
 
 ## Try it in a minute
 
@@ -60,7 +60,7 @@ The whole app changes on the spot, with no restart.
 
 Borealis follows your Hermes light/dark setting. Click a picture to see the full window.
 
-| [![Night: a mint, blue and violet aurora over dark ridges and a lake, with stars and a crescent moon](media/shots/night.png?v=0.1.0)](media/shots/night.png?v=0.1.0) | [![Day: pink and teal mountain ridges on cream paper, with a pink sun and its reflection](media/shots/day.png?v=0.1.0)](media/shots/day.png?v=0.1.0) |
+| [![Night: a mint, blue and violet aurora over dark ridges and a lake, with stars and a crescent moon](media/shots/night.png?v=0.1.1)](media/shots/night.png?v=0.1.1) | [![Day: pink and teal mountain ridges on cream paper, with a pink sun and its reflection](media/shots/day.png?v=0.1.1)](media/shots/day.png?v=0.1.1) |
 |:---:|:---:|
 | **Night** (dark mode) | **Day** (light mode) |
 
@@ -83,6 +83,7 @@ To go back to the stock look, type `/skin nous`.
 
 ## Small decisions, already made
 
+- **The chat stays readable.** The scene is at full strength only on an empty chat. Once there is text to read, in a conversation or on any other page, it fades back to about a quarter strength.
 - **The colours are yours to change.** The scene reads its colours from the theme, so picking another accent in **Settings → Appearance** recolours the aurora too.
 - **Calm when you ask for it.** With your system's reduced-motion setting on, the scene holds one still frame.
 - **Easy on the machine.** The scene is drawn at one pixel per 3px dot, at 24 frames a second, and stops while the window is hidden.
