@@ -596,11 +596,12 @@ ${T}:has([data-slot="aui_intro"]) canvas[data-borealis-scene] {
   }
 }
 
-/* The sidebar keeps most of its paper, so the sky only glows through it. */
+/* The sessions sidebar is clear like every other side panel, so the sky runs
+   under it too; only its dithered edge (below) marks where it ends. */
 ${T} [data-slot="sidebar"] {
   position: relative;
   border-right: 0 !important;
-  background-color: color-mix(in srgb, var(--ui-bg-chrome) 78%, transparent) !important;
+  background-color: transparent !important;
 }
 
 /* ── Edges dissolve: dither-fade rules instead of hairlines ──────────────── */
