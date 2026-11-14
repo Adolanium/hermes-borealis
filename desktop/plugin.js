@@ -19,8 +19,12 @@ const PLUGIN = {"id": "borealis", "name": "Borealis"}
 
 const NAME = 'borealis'
 
-// Prefix match: picking an accent colour renames the active theme to `borealis-accent-<hex>`.
-const T = `:root[data-hermes-theme^="${NAME}"]`
+// The theme itself, or an accent retint of it: picking an accent colour renames the
+// active theme to `borealis-accent-<hex>`. Not a bare prefix, so other themes whose
+// names start with "borealis" (the `borealis-cli` terminal skin, which Desktop also
+// lists) don't get the scene.
+const T = `:root:is([data-hermes-theme="${NAME}"], [data-hermes-theme^="${NAME}-accent-"])`
+const isBorealis = name => name === NAME || name.startsWith(`${NAME}-accent-`)
 
 /* ── Scene settings ──────────────────────────────────────────────────────── */
 
@@ -484,7 +488,7 @@ function auroraBackdrop() {
 
   const sync = () => {
     pending = 0
-    const active = (root.dataset.hermesTheme ?? '').startsWith(NAME)
+    const active = isBorealis(root.dataset.hermesTheme ?? '')
 
     if (active && !stage) {
       stage = createStage()
