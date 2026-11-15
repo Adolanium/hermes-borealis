@@ -21,7 +21,7 @@
 
 </div>
 
-![The Hermes Desktop window split diagonally: on the left, a dark window with a mint and violet dithered aurora over black mountain ridges; on the right, a cream window with pink and teal ridges and a pink sun](media/banner.png?v=0.1.1)
+![The Hermes Desktop window split diagonally: on the left, a dark window with a mint and violet dithered aurora over black mountain ridges; on the right, a cream window with pink and teal ridges and a pink sun](media/banner.png?v=0.2.1)
 
 ## Try it in a minute
 
@@ -60,7 +60,7 @@ The whole app changes on the spot, with no restart.
 
 Borealis follows your Hermes light/dark setting. Click a picture to see the full window.
 
-| [![Night: a mint, blue and violet aurora over dark ridges and a lake, with stars and a crescent moon](media/shots/night.png?v=0.1.1)](media/shots/night.png?v=0.1.1) | [![Day: pink and teal mountain ridges on cream paper, with a pink sun and its reflection](media/shots/day.png?v=0.1.1)](media/shots/day.png?v=0.1.1) |
+| [![Night: a mint, blue and violet aurora over dark ridges and a lake, with stars and a crescent moon](media/shots/night.png?v=0.2.1)](media/shots/night.png?v=0.2.1) | [![Day: pink and teal mountain ridges on cream paper, with a pink sun and its reflection](media/shots/day.png?v=0.2.1)](media/shots/day.png?v=0.2.1) |
 |:---:|:---:|
 | **Night** (dark mode) | **Day** (light mode) |
 
