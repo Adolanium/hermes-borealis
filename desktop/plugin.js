@@ -586,7 +586,7 @@ ${T} [data-glass-raised] {
    read (a conversation, or any other page), it fades back so it never competes
    with the words. The canvas sits on <html>'s paper, so opacity fades to paper. */
 ${T} canvas[data-borealis-scene] {
-  opacity: 0.26;
+  opacity: 0.15;
   transition: opacity 700ms ease;
 }
 
@@ -594,18 +594,25 @@ ${T}:has([data-slot="aui_intro"]) canvas[data-borealis-scene] {
   opacity: 1;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  ${T} canvas[data-borealis-scene] {
-    transition: none;
-  }
-}
-
-/* The sessions sidebar is clear like every other side panel, so the sky runs
-   under it too; only its dithered edge (below) marks where it ends. */
+/* The sky runs under the sessions sidebar too, behind a veil of paper so the
+   small grey text (timestamps, the search hint) keeps its contrast. The veil is
+   heavier on an empty chat, where the scene behind it is at full strength. */
 ${T} [data-slot="sidebar"] {
   position: relative;
   border-right: 0 !important;
-  background-color: transparent !important;
+  background-color: color-mix(in srgb, var(--ui-bg-chrome) 55%, transparent) !important;
+  transition: background-color 700ms ease;
+}
+
+${T}:has([data-slot="aui_intro"]) [data-slot="sidebar"] {
+  background-color: color-mix(in srgb, var(--ui-bg-chrome) 82%, transparent) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ${T} canvas[data-borealis-scene],
+  ${T} [data-slot="sidebar"] {
+    transition: none;
+  }
 }
 
 /* ── Edges dissolve: dither-fade rules instead of hairlines ──────────────── */
