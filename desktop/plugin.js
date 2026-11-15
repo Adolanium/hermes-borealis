@@ -590,6 +590,13 @@ ${T} canvas[data-borealis-scene] {
   transition: opacity 700ms ease;
 }
 
+/* On paper the app's grey tool-call text has less contrast to spare than it does
+   at night, so the day scene fades further: at 9% that text stays above 4.5:1
+   even over the teal ridge. */
+${T}:not(.dark) canvas[data-borealis-scene] {
+  opacity: 0.09;
+}
+
 ${T}:has([data-slot="aui_intro"]) canvas[data-borealis-scene] {
   opacity: 1;
 }
