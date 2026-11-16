@@ -28,9 +28,9 @@ const isBorealis = name => name === NAME || name.startsWith(`${NAME}-accent-`)
 
 /* ── Scene settings ──────────────────────────────────────────────────────── */
 
-// A small landscape, drawn back to front: sky (stars, a crescent moon and the odd
-// shooting star by night; a low sun by day), tall aurora curtains, three mountain
-// ridges, and a lake that mirrors all of it. Heights run 0 (bottom) to 1 (top).
+// A small landscape, drawn back to front: sky (stars, the moon in tonight's phase
+// and the odd shooting star by night; a low sun by day), tall aurora curtains,
+// three mountain ridges, and a lake that mirrors all of it. Heights run 0 (bottom) to 1 (top).
 const SCENE = {
   cell: 3, // CSS px per dither cell
   fps: 24, // the motion is slow; more frames only cost power
@@ -60,6 +60,7 @@ uniform vec2 uRes;
 uniform float uTime;
 uniform float uPointer; // pointer x, -0.5 (left) to 0.5 (right), eased
 uniform float uNight; // 1 in dark mode, 0 in light
+uniform float uMoon; // the moon's phase: 0 new, 0.25 first quarter, 0.5 full, 0.75 last quarter
 uniform vec3 uPaper;
 uniform vec3 uTint1;
 uniform vec3 uTint2;
@@ -183,10 +184,17 @@ float scene(vec2 uv, float t, out float ground) {
   float sun = length(p - vec2(0.2 * aspect, HORIZON + 0.16));
   tone = max(tone, (1.0 - uNight) * (sun < 0.09 ? 0.38 : 0.24 * exp(-(sun - 0.09) * 9.0)));
 
-  // night: a thin crescent, high on the right, and shooting stars
-  vec2 moon = p - vec2(0.36 * aspect, 0.8);
-  if (length(moon) < 0.032 && length(moon - vec2(0.014, 0.007)) > 0.03) {
-    tone = max(tone, uNight);
+  // night: the moon in tonight's phase, high on the right, and shooting stars.
+  // The terminator is a half-ellipse across the disc; waxing light is on the
+  // right, as seen from the northern hemisphere. The dark part hides the aurora.
+  vec2 moon = (p - vec2(0.36 * aspect, 0.8)) / 0.032;
+  if (uNight > 0.5 && length(moon) < 1.0) {
+    float limb = sqrt(1.0 - moon.y * moon.y);
+    // a thin crescent keeps a couple of dots' width so it doesn't break up; dark at new moon
+    float edge = min(cos(6.2831853 * uMoon) * limb, limb - 0.2 * step(0.02, min(uMoon, 1.0 - uMoon)));
+    bool lit = uMoon < 0.5 ? moon.x > edge : moon.x < -edge;
+    float maria = smoothstep(0.55, 0.75, fbm(moon * 2.2 + vec2(4.0, 1.0)));
+    tone = lit ? 1.0 - 0.22 * maria : tone * 0.3;
   }
   tone = max(tone, uNight * meteor(p, t, aspect));
 
@@ -245,6 +253,24 @@ void main() {
   gl_Position = vec4(aPos, 0.0, 1.0);
 }
 `
+
+/* ── The moon's phase ────────────────────────────────────────────────────── */
+
+// Tonight's phase from the date alone, no location needed: the Sun-Moon
+// elongation from its mean motion plus the six largest periodic terms (Meeus,
+// Astronomical Algorithms, ch. 47). Against a full ephemeris it puts new, quarter
+// and full moons within an hour over 2015-2035; a plain 29.53-day cycle can be
+// most of a day out.
+function moonPhase(date) {
+  const d = date.getTime() / 86400000 - 10957.5 // days from J2000.0
+  const r = Math.PI / 180
+  const D = 297.85 + 12.190749 * d // mean elongation
+  const M = 357.53 + 0.9856 * d // the Sun's mean anomaly
+  const Mm = 134.96 + 13.064993 * d // the Moon's mean anomaly
+  const elongation = D + 6.289 * Math.sin(Mm * r) - 2.1 * Math.sin(M * r) + 1.274 * Math.sin((2 * D - Mm) * r)
+    + 0.658 * Math.sin(2 * D * r) + 0.214 * Math.sin(2 * Mm * r) - 0.11 * Math.sin(D * r)
+  return (((elongation / 360) % 1) + 1) % 1
+}
 
 /* ── Theme colours to shader colours ─────────────────────────────────────── */
 
@@ -374,7 +400,7 @@ function createStage() {
     gl.enableVertexAttribArray(0)
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
     locations = Object.fromEntries(
-      ['uRes', 'uTime', 'uPointer', 'uNight', ...UNIFORMS].map(name => [name, gl.getUniformLocation(program, name)])
+      ['uRes', 'uTime', 'uPointer', 'uNight', 'uMoon', ...UNIFORMS].map(name => [name, gl.getUniformLocation(program, name)])
     )
   }
 
@@ -391,6 +417,7 @@ function createStage() {
     gl.uniform1f(locations.uTime, t)
     gl.uniform1f(locations.uPointer, pointer)
     gl.uniform1f(locations.uNight, document.documentElement.classList.contains('dark') ? 1 : 0)
+    gl.uniform1f(locations.uMoon, moonPhase(new Date()))
 
     for (const key of UNIFORMS) {
       gl.uniform3fv(locations[key], palette[key])
