@@ -191,7 +191,7 @@ float scene(vec2 uv, float t, out float ground) {
   if (uNight > 0.5 && length(moon) < 1.0) {
     float limb = sqrt(1.0 - moon.y * moon.y);
     // a thin crescent keeps a couple of dots' width so it doesn't break up; dark at new moon
-    float edge = min(cos(6.2831853 * uMoon) * limb, limb - 0.2 * step(0.02, min(uMoon, 1.0 - uMoon)));
+    float edge = min(cos(6.2831853 * uMoon) * limb, max(limb - 0.2 * step(0.02, min(uMoon, 1.0 - uMoon)), 0.0));
     bool lit = uMoon < 0.5 ? moon.x > edge : moon.x < -edge;
     float maria = smoothstep(0.55, 0.75, fbm(moon * 2.2 + vec2(4.0, 1.0)));
     tone = lit ? 1.0 - 0.22 * maria : tone * 0.3;
