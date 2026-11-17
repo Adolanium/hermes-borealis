@@ -13,7 +13,7 @@
   By day, the same view turns into a two-ink print: pink and teal ridges on cream paper, with a low sun.
   Everything is drawn in dots, one per 3 pixels, in the theme's own colours.
 
-  <sub>FOR <a href="https://github.com/NousResearch/hermes-agent">HERMES DESKTOP</a> &nbsp;·&nbsp; COMMUNITY THEME &nbsp;·&nbsp; VERSION 0.2.2</sub>
+  <sub>FOR <a href="https://github.com/NousResearch/hermes-agent">HERMES DESKTOP</a> &nbsp;·&nbsp; COMMUNITY THEME &nbsp;·&nbsp; VERSION 0.3.0</sub>
 
   <br /><br />
 
