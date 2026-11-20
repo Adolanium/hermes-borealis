@@ -745,10 +745,24 @@ ${T} [data-slot="composer-surface"] button[data-variant="default"] {
 
 ${T} [data-slot="kbd"] {
   font-family: var(--font-mono);
+  border-radius: 2px !important;
+}
+
+/* Only neutral key caps go flat. A cap the app tints with the primary colour is
+   carrying state (the clarify card's picked answer and its keyboard preview, a
+   keybind being captured), so it keeps that state's colours. */
+${T} [data-slot="kbd"]:not([class*="primary"]) {
   background: transparent !important;
   border: 1px solid var(--borealis-rule) !important;
-  border-radius: 2px !important;
   color: var(--borealis-dim) !important;
+}
+
+/* The picked answer: a solid cap like the composer's send button. The app inks
+   it white, which disappears on the night mint, so use the theme's own ink. */
+${T} [data-slot="kbd"].bg-primary {
+  background: var(--theme-midground) !important;
+  border-color: var(--theme-midground) !important;
+  color: var(--dt-midground-foreground) !important;
 }
 
 ${T} [data-slot="sidebar-input"],
